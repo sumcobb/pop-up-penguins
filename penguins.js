@@ -30,8 +30,6 @@ $(document).ready(function() {
     gameholder.append(yeti);
 
     dropdown.onchange = function () {
-        console.log("ON CHANGE");
-
 
         for (var i = 1; i <= numPenguins; i++) {
             if (i != yetiPosition) {
@@ -54,15 +52,13 @@ $(document).ready(function() {
 
             if (i != yetiPosition) {
                 (function () {
-                    var penguin;
 
-                    penguin = document.createElement("div");
+                    var penguin = document.createElement("div");
                     penguin.class = "penguin" + i;
                     penguin.id = "penguin" + i;
                     penguin.style.width = "200px";
                     penguin.style.height = "200px";
                     penguin.style.float = "left";
-
 
                     if (i < 9) {
                         $(penguin).css("background-image", "url('penguin_pngs/mound_"+i+".png')");
@@ -90,7 +86,6 @@ $(document).ready(function() {
                     gameholder.append(penguin);
                 }());
             } else {
-                console.log("yeti");
 
                 var yeti = document.createElement("div");
                 yeti.id = "yeti";
@@ -116,32 +111,26 @@ $(document).ready(function() {
                     yeti.onmouseover = null;
                     yeti.onmouseout = null;
 
-                    for (var j = 1; j <= numPenguins; j++) {
+                    for (var i = 1; i <= numPenguins; i++) {
+
                         if (j != yetiPosition) {
                             (function () {
-
-                                console.log("yeti j: " + j);
+                                var p = document.getElementById("penguin"+i);
 
                                 if (j < 9) {
-                                    console.log($(".pengiun"+j));
-                                    $(".pengiun"+j).css("background-image", "url('penguin_pngs/mound_"+j+".png')");
+                                    $(p).css("background-image", "url('penguin_pngs/mound_"+j+".png')");
                                 } else {
-                                    $(".pengiun"+j).css("background-image", "url('penguin_pngs/mound_"+(j%8+1)+".png')");
+                                    $(p).css("background-image", "url('penguin_pngs/mound_"+(j%8+1)+".png')");
                                 }
                             }());
                         }
                     }
-                    var random = Math.floor(Math.random() * 8) + 1;
                     $(yeti).css("background-image", "url('penguin_pngs/yeti.png')");
                 }
 
                 gameholder.append(yeti);
             }
         }
-
-
-
     };
-
 
 });
