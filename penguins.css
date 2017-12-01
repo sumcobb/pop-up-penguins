@@ -15,7 +15,7 @@ A style sheet for penguins.html.
     height: 150px;
     background-image:url('penguin_pngs/penguin_title.png');
 }
-
+/*
 .penguin1:hover {
     background-image:url('penguin_pngs/mound_1_hover.png');
     cursor: pointer;
@@ -32,6 +32,7 @@ A style sheet for penguins.html.
     background-image:url('penguin_pngs/mound_1.png');
 }
 
+
 .yeti:hover {
     background-image:url('penguin_pngs/mound_9_hover.png');
     cursor: pointer;
@@ -47,3 +48,4 @@ A style sheet for penguins.html.
     float: left;
     background-image:url('penguin_pngs/mound_9.png');
 }
+*/

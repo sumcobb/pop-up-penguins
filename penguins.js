@@ -7,7 +7,8 @@ $(document).ready(function() {
 
     document.body.style.backgroundColor = "#ccf5f5";
 
-    var numPenguins = 0;
+    var numPenguins;
+    var yetiPosition;
     var dropdown = document.createElement("select");
     for(var j = 2; j <= 64; j++) {
         var option = document.createElement("option");
@@ -15,65 +16,132 @@ $(document).ready(function() {
         option.text = String(j);
         dropdown.options.add(option);
     }
+
+    //var gameholder = document.createElement("div");
+    //document.body.appendChild(gameholder);
+    var gameholder = document.getElementById("gameholder");
     document.body.appendChild(dropdown);
 
-    $(dropdown).on("change", function() {
-        numPenguins = this.value;
-        console.log(numPenguins);
-    });
-
-    var gameholder = document.createElement("div");
-    document.body.appendChild(gameholder);
-    var title = document.createElement("div");
+    //var title = document.createElement("div");
+    //gameholder.append(title);
+    var title = document.getElementById("title");
     var yeti = document.createElement("div");
-    gameholder.append(title);
+
     gameholder.append(yeti);
 
-    for (var i = 1; i < 25; i++) {
-        (function () {
+    dropdown.onchange = function () {
+        console.log("ON CHANGE");
 
-            var penguin = document.createElement("div");
-            penguin.class = "penguin" + i;
-            penguin.style.width = "200px";
-            penguin.style.height = "200px";
-            penguin.style.float = "left";
 
-            if (i < 9) {
-                penguin.style.backgroundImage = "url('penguin_pngs/mound_"+i+".png')";
+        for (var i = 1; i <= numPenguins; i++) {
+            if (i != yetiPosition) {
+                (function () {
+                    var p = document.getElementById("penguin"+i);
+                    $(p).remove();
+                }());
+            }
+        }
+
+        $("#yeti").remove();
+
+        numPenguins = this.value;
+        console.log("numPeguins " + numPenguins);
+
+        yetiPosition = Math.floor(Math.random() * numPenguins) + 1;
+        console.log("yeti position: "+yetiPosition);
+
+        for (var i = 1; i <= numPenguins; i++) {
+
+            if (i != yetiPosition) {
+                (function () {
+                    var penguin;
+
+                    penguin = document.createElement("div");
+                    penguin.class = "penguin" + i;
+                    penguin.id = "penguin" + i;
+                    penguin.style.width = "200px";
+                    penguin.style.height = "200px";
+                    penguin.style.float = "left";
+
+
+                    if (i < 9) {
+                        $(penguin).css("background-image", "url('penguin_pngs/mound_"+i+".png')");
+                    } else {
+                        $(penguin).css("background-image", "url('penguin_pngs/mound_"+(i%8+1)+".png')");
+                    }
+
+                    penguin.onmouseover =  function () {
+                        $(penguin).css("background-image", "url('penguin_pngs/mound_1_hover.png')");
+                        $(penguin).css("cursor", "pointer");
+                    };
+
+                    penguin.onmouseout =  function () {
+                        $(penguin).css("background-image", "url('penguin_pngs/mound_1.png')");
+                    };
+
+                    penguin.onclick = function () {
+                        penguin.onmouseover = null;
+                        penguin.onmouseout = null;
+                        var random = Math.floor(Math.random() * 8) + 1;
+                        $(penguin).css("background-image", "url('penguin_pngs/penguin_" + random + ".png')");
+                        penguin.onclick = null;
+                    }
+
+                    gameholder.append(penguin);
+                }());
             } else {
-                penguin.style.backgroundImage = "url('penguin_pngs/mound_"+(i%8+1)+".png')";
+                console.log("yeti");
+
+                var yeti = document.createElement("div");
+                yeti.id = "yeti";
+                yeti.style.width = "200px";
+                yeti.style.height = "200px";
+                yeti.style.float = "left";
+                yeti.style.backgroundImage = "url('penguin_pngs/mound_9.png')";
+
+                yeti.onmouseover =  function () {
+                    $(yeti).css("background-image", "url('penguin_pngs/mound_9_hover.png')");
+                    $(yeti).css("cursor", "pointer");
+
+                };
+
+                yeti.onmouseout =  function () {
+                    $(yeti).css("background-image", "url('penguin_pngs/mound_9.png')");
+
+                };
+
+                yeti.onclick = function () {
+                    //alert("Yaaaarrrr!");
+
+                    yeti.onmouseover = null;
+                    yeti.onmouseout = null;
+
+                    for (var j = 1; j <= numPenguins; j++) {
+                        if (j != yetiPosition) {
+                            (function () {
+
+                                console.log("yeti j: " + j);
+
+                                if (j < 9) {
+                                    console.log($(".pengiun"+j));
+                                    $(".pengiun"+j).css("background-image", "url('penguin_pngs/mound_"+j+".png')");
+                                } else {
+                                    $(".pengiun"+j).css("background-image", "url('penguin_pngs/mound_"+(j%8+1)+".png')");
+                                }
+                            }());
+                        }
+                    }
+                    var random = Math.floor(Math.random() * 8) + 1;
+                    $(yeti).css("background-image", "url('penguin_pngs/yeti.png')");
+                }
+
+                gameholder.append(yeti);
             }
-
-            penguin.onmouseover =  function () {
-                $(penguin).css("background-image", "url('penguin_pngs/mound_1_hover.png')");
-                $(penguin).css("cursor", "pointer");
-
-            };
-
-            penguin.onmouseout =  function () {
-                $(penguin).css("background-image", "url('penguin_pngs/mound_1.png')");
-
-            };
-
-            penguin.onclick = function () {
-                penguin.onmouseover = null;
-                penguin.onmouseout = null;
-
-                var random = Math.floor(Math.random() * 8) + 1;
-                $(penguin).css("background-image", "url('penguin_pngs/penguin_" + random + ".png')");
-            }
-
-            gameholder.append(penguin);
-        }());
-    }
+        }
 
 
 
-    $(".yeti").mousedown(function() {
-        alert("Yaaaarrrr!");
-    });
-
-
+    };
 
 
 });
