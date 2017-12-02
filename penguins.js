@@ -44,7 +44,6 @@ $(document).ready(function() {
     * When the user selects a new number in the dropdown, a new game is loaded.
     */
     dropdown.onchange = function () {
-
         // Remove the div elements from the previous game:
         for (var i = 1; i <= number; i++) {
             if (i != yetiPosition) {
